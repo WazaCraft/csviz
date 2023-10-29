@@ -52,7 +52,7 @@ def generate_visualizations(df):
                                 color_continuous_scale="Viridis")
             st.plotly_chart(fig)
 
-st.title('Dynamic CSV Data Dashboard')
+st.title('Dynamic Data Dashboard')
 
 
 # Dark mode settings would go into .streamlit/config.toml, not in the Python script.
