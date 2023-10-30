@@ -67,8 +67,6 @@ def generate_visualizations(df, tab=None, kpi_filter_col=None, kpi_filter_val=No
             geo_df = pd.merge(df, geocoding_data, left_on=zip_column, right_on='Zip Code', how='left')
 
             # Data filtering
-            filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
-            default_filter_index = filterable_cols.index('Customer Segment') if 'Customer Segment' in filterable_cols else 0
             filter_col = st.sidebar.selectbox("Filter by:", filterable_cols, index=default_filter_index, key="geo_filter_col_GEO")
             filter_value = st.sidebar.selectbox("Select value:", geo_df[filter_col].unique(), key="geo_filter_value_GEO")
 

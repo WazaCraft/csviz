@@ -81,21 +81,21 @@ def generate_visualizations(df, tab=None, kpi_filter_col=None, kpi_filter_val=No
                                 size=size_col, color=color_col)
             st.plotly_chart(fig, use_container_width=True)
 
-    elif tab == "KPI":
-        st.write("## Key Performance Indicators")
-        filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
-        filter_col = st.sidebar.selectbox("Filter KPIs by:", filterable_cols, index=filterable_cols.index('Customer Segment'), key="kpi_filter_col_KPI")
-        filter_val = st.sidebar.selectbox("Select value:", df[filter_col].unique(), key="kpi_filter_val_KPI")
-        filtered_kpi_df = df[df[filter_col] == filter_val]
-        
-        if not filtered_kpi_df.empty:
-            avg_order_value = filtered_kpi_df['Average Order Value'].mean()
-            total_purchase = filtered_kpi_df['Total Purchase Amount'].sum()
-            col1, col2 = st.columns(2)
-            col1.metric("Average Order Value", f"${avg_order_value:.2f}")
-            col2.metric("Total Purchase Amount", f"${total_purchase:.2f}")
-        else:
-            st.write("No data available for the selected filter.")
+elif tab == "KPI":
+    st.write("## Key Performance Indicators")
+    filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
+    filter_col = st.sidebar.selectbox("Filter KPIs by:", filterable_cols, index=filterable_cols.index('Customer Segment'), key="kpi_filter_col_KPI")
+    filter_val = st.sidebar.selectbox("Select value:", df[filter_col].unique(), key="kpi_filter_val_KPI")
+    filtered_kpi_df = df[df[filter_col] == filter_val]
+    
+    if not filtered_kpi_df.empty:
+        avg_order_value = filtered_kpi_df['Average Order Value'].mean()
+        total_purchase = filtered_kpi_df['Total Purchase Amount'].sum()
+        col1, col2 = st.columns(2)
+        col1.metric("Average Order Value", f"${avg_order_value:.2f}")
+        col2.metric("Total Purchase Amount", f"${total_purchase:.2f}")
+    else:
+        st.write("No data available for the selected filter.")
 
 # Main Execution
 st.title('Dynamic Data Dashboard')

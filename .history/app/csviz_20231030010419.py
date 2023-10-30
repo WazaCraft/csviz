@@ -69,9 +69,10 @@ def generate_visualizations(df, tab=None, kpi_filter_col=None, kpi_filter_val=No
             # Data filtering
             filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
             default_filter_index = filterable_cols.index('Customer Segment') if 'Customer Segment' in filterable_cols else 0
-            filter_col = st.sidebar.selectbox("Filter by:", filterable_cols, index=default_filter_index, key="geo_filter_col_GEO")
-            filter_value = st.sidebar.selectbox("Select value:", geo_df[filter_col].unique(), key="geo_filter_value_GEO")
-
+if tab == "Geographic Data":
+    filter_col = st.sidebar.selectbox("Filter by:", filterable_cols, index=default_filter_index, key="geo_filter_col_GEO")
+    filter_value = st.sidebar.selectbox("Select value:", geo_df[filter_col].unique(), key="geo_filter_value_GEO")
+ 
             filtered_geo_df = geo_df[geo_df[filter_col] == filter_value]
 
             size_col = st.sidebar.selectbox("Size by:", df.select_dtypes(include=['float64', 'int64']).columns.tolist())
