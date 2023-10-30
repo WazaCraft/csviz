@@ -89,7 +89,7 @@ def generate_visualizations(df, tab=None, kpi_filter_col=None, kpi_filter_val=No
         filter_col = st.sidebar.selectbox("Filter KPIs by:", filterable_cols, index=filterable_cols.index('Customer Segment'), key="kpi_filter_col_KPI")
         filter_val = st.sidebar.selectbox("Select value:", df[filter_col].unique(), key="kpi_filter_val_KPI")
         filtered_kpi_df = df[df[filter_col] == filter_val]        
-        if not filtered_kpi_df.empty:
+            if not filtered_kpi_df.empty:
             avg_order_value = filtered_kpi_df['Average Order Value'].mean()
             total_purchase = filtered_kpi_df['Total Purchase Amount'].sum()
             

@@ -69,8 +69,8 @@ def generate_visualizations(df, tab=None, kpi_filter_col=None, kpi_filter_val=No
             # Data filtering
             filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
             default_filter_index = filterable_cols.index('Customer Segment') if 'Customer Segment' in filterable_cols else 0
-            filter_col = st.sidebar.selectbox("Filter by:", filterable_cols, index=default_filter_index, key="geo_filter_col_GEO")
-            filter_value = st.sidebar.selectbox("Select value:", geo_df[filter_col].unique(), key="geo_filter_value_GEO")
+            filter_col = st.sidebar.selectbox("Filter by:", filterable_cols, index=default_filter_index, key="geo_filter_col")
+            filter_value = st.sidebar.selectbox("Select value:", geo_df[filter_col].unique(), key="geo_filter_value")
 
             filtered_geo_df = geo_df[geo_df[filter_col] == filter_value]
 
@@ -81,14 +81,23 @@ def generate_visualizations(df, tab=None, kpi_filter_col=None, kpi_filter_val=No
                                 size=size_col, color=color_col)
             st.plotly_chart(fig, use_container_width=True)
 
-    elif tab == "KPI":
-        st.write("## Key Performance Indicators")
-
-        # Data filtering for KPIs
-        filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
-        filter_col = st.sidebar.selectbox("Filter KPIs by:", filterable_cols, index=filterable_cols.index('Customer Segment'), key="kpi_filter_col_KPI")
-        filter_val = st.sidebar.selectbox("Select value:", df[filter_col].unique(), key="kpi_filter_val_KPI")
-        filtered_kpi_df = df[df[filter_col] == filter_val]        
+elif tab == "KPI":
+    st.write("## Key Performance Indicators")
+    
+    filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
+    filter_col = st.sidebar.selectbox(
+        "Filter KPIs by:", 
+        filterable_cols, 
+        index=filterable_cols.index('Customer Segment'), 
+        key="kpi_filter_col"
+    )
+    filter_val = st.sidebar.selectbox(
+        "Select value:", 
+        df[filter_col].unique(), 
+        key="kpi_filter_val_KPI"  # Unique key
+    )
+    
+    filtered_kpi_df = df[df[filter_col] == filter_val]        
         if not filtered_kpi_df.empty:
             avg_order_value = filtered_kpi_df['Average Order Value'].mean()
             total_purchase = filtered_kpi_df['Total Purchase Amount'].sum()
