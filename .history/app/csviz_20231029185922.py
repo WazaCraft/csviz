@@ -27,7 +27,7 @@ def geocode(zip_code, country):
         return None, None
 
 # Load offline geocoding data
-geocoding_data = pd.read_csv('https://public-one.s3.us-west-2.amazonaws.com/geo-data.csv')
+geocoding_data = pd.read_csv('geo-data.csv')
 
 # Visualizations
 def generate_visualizations(df):
