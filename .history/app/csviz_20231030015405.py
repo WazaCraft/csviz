@@ -97,6 +97,22 @@ def generate_visualizations(df, tab=None):
             col2.metric("Total Purchase Amount", f"${total_purchase:.2f}")
         else:
             st.write("No data available for the selected filter.")
+    if tab == "KPI":
+        filterable_cols = df.select_dtypes(include=['object']).columns.tolist()
+        filter_col = st.selectbox("Filter KPIs by:", filterable_cols, index=filterable_cols.index('Customer Segment'))
+        filter_val = st.selectbox("Select value:", df[filter_col].unique())
+        
+        filtered_kpi_df = df[df[filter_col] == filter_val]
+        
+        if not filtered_kpi_df.empty:
+            avg_order_value = filtered_kpi_df['Average Order Value'].mean()
+            total_purchase = filtered_kpi_df['Total Purchase Amount'].sum()
+            
+            col1, col2 = st.columns(2)
+            col1.metric("Average Order Value", f"${avg_order_value:.2f}")
+            col2.metric("Total Purchase Amount", f"${total_purchase:.2f}")
+        else:
+            st.write("No data available for the selected filter.")
 # Main Execution
 st.title('Dynamic Data Dashboard')
 # Explanation and Disclaimer
@@ -123,6 +139,10 @@ if df is not None:
         generate_visualizations(df, tab='Geographic Data')
     with tab5:
         generate_visualizations(df, tab='KPI')
+This version places the KPI filtering options directly within the KPI tab and removes them from the sidebar. It should seamlessly integrate with your existing script.
+
+
+
 
 
 

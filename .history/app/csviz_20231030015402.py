@@ -123,6 +123,10 @@ if df is not None:
         generate_visualizations(df, tab='Geographic Data')
     with tab5:
         generate_visualizations(df, tab='KPI')
+This version places the KPI filtering options directly within the KPI tab and removes them from the sidebar. It should seamlessly integrate with your existing script.
+
+
+
 
 
 
